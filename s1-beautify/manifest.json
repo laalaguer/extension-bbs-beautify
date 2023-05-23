@@ -1,0 +1,43 @@
+{
+
+  "manifest_version": 3,
+  "name": "S1 Beautify 论坛字体图片美化",
+  "short_name": "S1 Beautify",
+  "version": "1.1",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "s1beautify@abyteahead"
+    }
+  },
+  
+
+  "description": "S1 论坛适用: 扩大帖文字体，规整图片大小",
+
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "action": {
+    "default_icon": "icons/icon-48.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.saraba1st.com/*"],
+      "js": [
+        "common.js",
+        "beautify.js"
+      ]
+    }
+  ],
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}
+
