@@ -16,7 +16,7 @@ const S1_FONT_SIZES = {
 const S1_PIC_WIDTHS = {
     'compact':  10,
     'smaller':  30,
-    'small':    50,
+    'small':    70,
     'normal':   100
 }
 
