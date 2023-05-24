@@ -187,6 +187,18 @@ async function s1_set(key, value) {
     }
 }
 
+// Helper: get-set user's configuration
+// if empty, then set the user's settings with default value.
+async function get_set_storage (key, value) {
+    const _value = await s1_get(key)
+    if (!_value) {
+        await s1_set(key, value)
+        return value
+    } else {
+        return _value
+    }
+}
+
 /** 
  * User defaults on first install
  */
