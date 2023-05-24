@@ -14,9 +14,9 @@ const S1_FONT_SIZES = {
 }
 
 const S1_PIC_WIDTHS = {
-    'compact':  20,
-    'smaller':  50,
-    'small':    70,
+    'compact':  10,
+    'smaller':  30,
+    'small':    50,
     'normal':   100
 }
 
@@ -140,7 +140,12 @@ function s1_user_set_pic_width(user_option) {
  * Local Storage Keys and Values
 */
 
-const S1_BROWSER = window.browser && browser.runtime ? browser : chrome
+function s1_get_browser() {
+    const S1_BROWSER = window.browser && browser.runtime ? browser : chrome
+    return S1_BROWSER
+}
+
+const S1_BROWSER = s1_get_browser()
 const S1_KEY_FONT_SIZE = 'S1_KEY_FONT_SIZE'
 const S1_KEY_PIC_MODE = 'S1_KEY_PIC_MODE'
 
@@ -186,5 +191,12 @@ async function s1_set(key, value) {
  * User defaults on first install
  */
 
-const USER_DEFAULT_FONT_SIZE = "normal"
-const USER_DEFAULT_PIC_MODE = "normal"
+const USER_DEFAULT_FONT_SIZE = "big"
+const USER_DEFAULT_PIC_MODE = "compact"
+
+
+/**
+ * Message communication keys and values
+ */
+
+const KEY_DECORATE = 'decorate'

@@ -1,3 +1,19 @@
+/** Helper: communicate with content script */
+
+async function tell_page_to_redecorate() {
+    const MY_BROWSER = s1_get_browser()
+    const tabs = await MY_BROWSER.tabs.query({active: true, currentWindow: true})
+    
+    const message = {}
+    message[KEY_DECORATE] = true
+    
+    if (tabs && tabs.length > 0) {
+        MY_BROWSER.tabs.sendMessage(tabs[0].id, message)
+    }
+}
+
+
+
 /** Trigger once the popup.html is loaded  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -15,7 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen to the configuration changes
     dropdown_reply.addEventListener('change', () => {
-        s1_set(S1_KEY_FONT_SIZE, dropdown_reply.value)
+        s1_set(S1_KEY_FONT_SIZE, dropdown_reply.value).then(() => {
+            tell_page_to_redecorate()
+        })
     });
 
     // Set default value if isn't set before
@@ -32,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen to the configuration changes
     dropdown_pic.addEventListener('change', () => {
-        s1_set(S1_KEY_PIC_MODE, dropdown_pic.value)
-    });
+        s1_set(S1_KEY_PIC_MODE, dropdown_pic.value).then(() => {
+            tell_page_to_redecorate()
+        })
+    })
 })
