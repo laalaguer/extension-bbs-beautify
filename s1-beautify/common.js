@@ -38,7 +38,7 @@ function s1_style_elements(elementSelector, attributeSelector, attributeValue) {
  * @param {number} prefix_size 
  * @param {number} title_size 
  */
-function s1_style_rows(prefix_size = S1_FONT_SIZES.small, title_size = S1_FONT_SIZES.normal) {
+function s1_resize_rows(prefix_size = S1_FONT_SIZES.small, title_size = S1_FONT_SIZES.normal) {
     s1_style_elements("tbody > tr > th > em > a", 'font-size', `${prefix_size}px`)
     s1_style_elements("tbody > tr > th > a", 'font-size', `${title_size}px`)
 }
@@ -47,7 +47,7 @@ function s1_style_rows(prefix_size = S1_FONT_SIZES.small, title_size = S1_FONT_S
  * Style each reply of a thread.
  * @param {number} content_size 
  */
-function s1_style_replies(content_size = S1_FONT_SIZES.big) {
+function s1_resize_replies(content_size = S1_FONT_SIZES.big) {
     s1_style_elements("td.t_f", 'font-size', `${content_size}px`)
 }
 
@@ -55,7 +55,7 @@ function s1_style_replies(content_size = S1_FONT_SIZES.big) {
  * Style each reply's author name
  * @param {number} content_size 
  */
-function s1_style_reply_author(content_size = S1_FONT_SIZES.normal) {
+function s1_resize_reply_author(content_size = S1_FONT_SIZES.normal) {
     s1_style_elements("a.xw1", 'font-size', `${content_size}px`)
 }
 
@@ -63,7 +63,7 @@ function s1_style_reply_author(content_size = S1_FONT_SIZES.normal) {
  * Get current window size
  * @returns width, height in px
  */
-function getWindowSize() {
+function s1_get_window_size() {
     return {
         width: window.innerWidth,
         height: window.innerHeight
@@ -89,7 +89,7 @@ function s1_set_pic_width(max_width = S1_PIC_WIDTHS.normal) {
  * @param {string} elementSelector
  * @param {number} max_tolerance max tolerance of br counts 
  */
-function removeLineBreakBetweenPics (elementSelector, max_tolerance = 2) {
+function s1_remove_br_between_pics (elementSelector, max_tolerance = 2) {
     const elements = document.querySelectorAll(elementSelector)
     elements.forEach((item) => {
         const kids = item.children
@@ -113,22 +113,22 @@ function removeLineBreakBetweenPics (elementSelector, max_tolerance = 2) {
 }
 
 /**
- * Do removeLineBreakBetweenPics on the replies 
+ * Do s1_remove_br_between_pics on the replies (posts) on HTML
  */
-function autoCompactPicsOfReplies(max_tolerance = 5) {
-    removeLineBreakBetweenPics("td.t_f", max_tolerance)
+function s1_remove_br_in_replies(max_tolerance = 5) {
+    s1_remove_br_between_pics("td.t_f", max_tolerance)
 }
 
 /** External called by user */
-function user_set_font_size(user_option) {
+function s1_user_set_font_size(user_option) {
     var value = S1_FONT_SIZES[user_option]
     if (value) {
-        s1_style_replies(value)
+        s1_resize_replies(value)
     }
 }
 
 /** External called by user */
-function user_set_pic_width(user_option) {
+function s1_user_set_pic_width(user_option) {
     var value = S1_PIC_WIDTHS[user_option]
     if (value) {
         s1_set_pic_width(value)
@@ -136,17 +136,23 @@ function user_set_pic_width(user_option) {
 }
 
 
-/** This section is related to local storage and key/value */
+/** 
+ * Local Storage Keys and Values
+*/
+
+const S1_BROWSER = window.browser && browser.runtime ? browser : chrome
 const S1_KEY_FONT_SIZE = 'S1_KEY_FONT_SIZE'
 const S1_KEY_PIC_MODE = 'S1_KEY_PIC_MODE'
 
-const S1_BROWSER = window.chrome ? chrome : browser
+/**
+ * Local Storage Operations
+ */
 
-/** This function fetches the key/value from the local storage */
-async function s1_get_storage_value(key) {
+// Get
+async function s1_get(key) {
     try {
         const items = await S1_BROWSER.storage.sync.get(key)
-        console.log('from get', items)
+        console.log('get', key, items)
         if (items) {
             return items[key]
         } else {
@@ -158,22 +164,17 @@ async function s1_get_storage_value(key) {
     }
 }
 
-async function s1_get_font_size() {
-    let size = await s1_get_storage_value(S1_KEY_FONT_SIZE)
-    return size
-}
-
-async function s1_get_pic_mode() {
-    let size = await s1_get_storage_value(S1_KEY_PIC_MODE)
-    return size
-}
-
-/** This function sets the key/value to the local storage */
-async function s1_set_storage_value(key, value) {
+// Set
+async function s1_set(key, value) {
     var items = {}
     items[key] = value;
     try {
-        await S1_BROWSER.storage.sync.set(items)
+        const result = await S1_BROWSER.storage.sync.set(items)
+        console.log('set result', result)
+        console.log('set', key, items)
+
+        const a = await s1_get(key)
+        console.log('inspect', key, a)
         return true
     } catch (error) {
         console.log(error)
@@ -181,15 +182,9 @@ async function s1_set_storage_value(key, value) {
     }
 }
 
-function s1_set_font_size(value) {
-    s1_set_storage_value(S1_KEY_FONT_SIZE, value)
-}
+/** 
+ * User defaults on first install
+ */
 
-function s1_set_pic_mode(value) {
-    s1_set_storage_value(S1_KEY_PIC_MODE, value)
-}
-
-/** This section contains user default values when install the plugin */
-
-const USER_DEFAULT_FONT_SIZE = S1_FONT_SIZES.normal 
-const USER_DEFAULT_PIC_MODE = S1_PIC_WIDTHS.normal
+const USER_DEFAULT_FONT_SIZE = "normal"
+const USER_DEFAULT_PIC_MODE = "normal"

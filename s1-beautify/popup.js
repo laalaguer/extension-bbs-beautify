@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set default value if isn't set before
     const dropdown_reply = document.getElementById('dropdown_reply');
-    s1_get_font_size().then((value) => {
+    s1_get(S1_KEY_FONT_SIZE).then((value) => {
         if (value) {
             dropdown_reply.value = value
         } else {
-            s1_set_font_size(USER_DEFAULT_FONT_SIZE).then(() => {
+            s1_set(S1_KEY_FONT_SIZE, USER_DEFAULT_FONT_SIZE).then(() => {
                 dropdown_reply.value = USER_DEFAULT_FONT_SIZE
             })
         }
@@ -15,17 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen to the configuration changes
     dropdown_reply.addEventListener('change', () => {
-        s1_set_font_size(dropdown_reply.value)
-        // user_set_font_size(dropdown_reply.value)
+        s1_set(S1_KEY_FONT_SIZE, dropdown_reply.value)
     });
 
     // Set default value if isn't set before
     const dropdown_pic = document.getElementById('dropdown_pic');
-    s1_get_pic_mode().then((value) => {
+    s1_get(S1_KEY_PIC_MODE).then((value) => {
         if (value) {
             dropdown_pic.value = value
         } else {
-            s1_set_pic_mode(USER_DEFAULT_PIC_MODE).then(() => {
+            s1_set(S1_KEY_PIC_MODE, USER_DEFAULT_PIC_MODE).then(() => {
                 dropdown_pic.value = USER_DEFAULT_PIC_MODE
             })
         }
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen to the configuration changes
     dropdown_pic.addEventListener('change', () => {
-        s1_set_pic_mode(dropdown_pic.value)
-        // user_set_pic_width(dropdown_pic.value)
+        s1_set(S1_KEY_PIC_MODE, dropdown_pic.value)
     });
 })

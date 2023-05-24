@@ -1,6 +1,12 @@
 # Beautify Extension of S1 Forum
-Beautify the surface on Discuz forums, for Firefox and Chrome.
+Beautify the surface on S1 forum, for Firefox and Chrome.
 
+### Manifest and Cross-Browser
+
+As of 2023, Chrome uses manifest V3, Firefox uses V2.
+
+Chrome V3 makes use of Promise. (while v2 uses callbacks)
+Firefox V2 has some specific configurations, but it uses Promise based APIs.
 
 ## Code Structure
 
@@ -13,13 +19,13 @@ Main file: `manifest.json`
 
 Runs automatically when user visit a page. It decorates the page.
 
-Main file: `beautify.js`
+Main file: `content.js`
 
-Depends on: `browser-polyfill.js`, `common.js`
+Depends on: `common.js`
 
 ### Popup
 Popup allow the user to manually configure the extension's behavior.
 
 Main file: `popup.html` 
 
-Depends on: `browser-polyfill.js`, `common.js`, `popup.js`.
+Depends on: `common.js`, `popup.js`.
