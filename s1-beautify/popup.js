@@ -37,6 +37,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Set default value if isn't set before
+    const dropdown_row = document.getElementById('dropdown_row');
+    s1_get(S1_KEY_ROW_SIZE).then((value) => {
+        if (value) {
+            dropdown_row.value = value
+        } else {
+            s1_set(S1_KEY_ROW_SIZE, USER_DEFAULT_ROW_SIZE).then(() => {
+                dropdown_row.value = USER_DEFAULT_ROW_SIZE
+            })
+        }
+    })
+
+    // Listen to the configuration changes
+    dropdown_row.addEventListener('change', () => {
+        s1_set(S1_KEY_ROW_SIZE, dropdown_row.value).then(() => {
+            tell_page_to_redecorate()
+        })
+    });
+
+    // Set default value if isn't set before
     const dropdown_pic = document.getElementById('dropdown_pic');
     s1_get(S1_KEY_PIC_MODE).then((value) => {
         if (value) {

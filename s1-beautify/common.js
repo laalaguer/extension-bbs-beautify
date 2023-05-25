@@ -71,16 +71,30 @@ function s1_get_window_size() {
 }
 
 /**
+ * Decorate an HTML element, if not decorated before.
+ * @param {HTMLElement} item 
+ */
+function s1_decorate_pic(item) {
+    if (!item.getAttribute('s1-decorated')) {
+        item.style['border-radius'] = '8px'
+        item.style['margin'] = '5px 5px'
+        item.style['box-shadow'] = '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19)'
+        item.setAttribute('s1-decorated', 'true')
+    }
+}
+
+/**
  * Normalize pictures to fit the outside container,
  * @param {number} max_width 10 is 10%, 80 is 80%
  */
 function s1_set_pic_width(max_width = S1_PIC_WIDTHS.normal) {
     const r = document.querySelectorAll("img.zoom")
     r.forEach((item) => {
-        item.style['border-radius'] = '5px'
-        item.style['max-width'] = `${max_width}%`
-        item.style['margin'] = '5px 0'
-        item.style['height'] = 'auto'
+        s1_decorate_pic(item)
+        if (!item.style['max-width'] || item.style['max-width'] !== `${max_width}%`) {
+            item.style['max-width'] = `${max_width}%`
+            item.style['height'] = 'auto'
+        }
     })
 }
 
@@ -128,6 +142,14 @@ function s1_user_set_font_size(user_option) {
 }
 
 /** External called by user */
+function s1_user_set_row_size(user_option) {
+    var value = S1_FONT_SIZES[user_option]
+    if (value) {
+        s1_resize_rows(value, value)
+    }
+}
+
+/** External called by user */
 function s1_user_set_pic_width(user_option) {
     var value = S1_PIC_WIDTHS[user_option]
     if (value) {
@@ -146,6 +168,7 @@ function s1_get_browser() {
 }
 
 const S1_BROWSER = s1_get_browser()
+const S1_KEY_ROW_SIZE = 'S1_KEY_ROW_SIZE'
 const S1_KEY_FONT_SIZE = 'S1_KEY_FONT_SIZE'
 const S1_KEY_PIC_MODE = 'S1_KEY_PIC_MODE'
 
@@ -203,6 +226,7 @@ async function get_set_storage (key, value) {
  * User defaults on first install
  */
 
+const USER_DEFAULT_ROW_SIZE = "big"
 const USER_DEFAULT_FONT_SIZE = "big"
 const USER_DEFAULT_PIC_MODE = "compact"
 

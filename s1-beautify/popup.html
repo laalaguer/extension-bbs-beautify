@@ -39,26 +39,38 @@
 
   <body>
   
-    <h1>帖子字体大小</h1>
+    <h1>帖子列表字体大小</h1>
     <div class="my-container">
       <span>选:</span>
-      <select id="dropdown_reply">
+      <select id="dropdown_row">
         <option selected disabled hidden value=''></option>
-        <option value="normal">正常</option>
+        <option value="normal">适中</option>
         <option value="big">大+</option>
         <option value="bigger">更大++</option>
         <option value="ultra">超大+++</option>
       </select>
     </div>
 
-    <h1>图片大小</h1>
+    <h1>帖子正文字体大小</h1>
+    <div class="my-container">
+      <span>选:</span>
+      <select id="dropdown_reply">
+        <option selected disabled hidden value=''></option>
+        <option value="normal">适中</option>
+        <option value="big">大+</option>
+        <option value="bigger">更大++</option>
+        <option value="ultra">超大+++</option>
+      </select>
+    </div>
+
+    <h1>帖子图片大小</h1>
     <div class="my-container">
       <span>选:</span>
       <select id="dropdown_pic">
         <option selected disabled hidden value=''></option>
         <option value="compact">密集</option> <!-- compact and 10 a row-->
         <option value="smaller">紧凑+</option> <!-- compact and 3 a row -->
-        <option value="small">正常++</option> <!-- no compact, 1 a row, 70% -->
+        <option value="small">适中++</option> <!-- no compact, 1 a row, 70% -->
         <option value="normal">铺满+++</option> <!-- no compact, 1 a row, 100% -->
       </select>
     </div>
