@@ -5,8 +5,20 @@ Beautify the surface on S1 forum, for Firefox and Chrome.
 
 As of 2023, Chrome uses manifest V3, Firefox uses V2.
 
-Chrome V3 makes use of Promise. (while v2 uses callbacks)
-Firefox V2 has some specific configurations, but it uses Promise based APIs.
+Chrome V3 enables Promise based APIs. (while v2 uses callbacks)
+
+Firefox V2 has some specific configurations, but it uses Promise based APIs. V3 just launched support, may take > 1 year to mature.
+
+```bash
+s1-beautify/
+    manifest-chrome.json # chrome manifest
+    manifest-firefox.json # firefox manifest
+```
+Build the code
+```bash
+./build-chrome.sh # build chrome
+./build-firefox.sh # build firefox 
+```
 
 ## Code Structure
 
