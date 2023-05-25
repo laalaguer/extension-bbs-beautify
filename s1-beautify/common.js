@@ -92,8 +92,8 @@ function s1_set_pic_width(max_width = S1_PIC_WIDTHS.normal) {
     r.forEach((item) => {
         s1_decorate_pic(item)
         if (!item.style['max-width'] || item.style['max-width'] !== `${max_width}%`) {
-            item.style['max-width'] = `${max_width}%`
             item.style['height'] = 'auto'
+            item.style['max-width'] = `${max_width}%`
         }
     })
 }
@@ -228,7 +228,7 @@ async function get_set_storage (key, value) {
 
 const USER_DEFAULT_ROW_SIZE = "big"
 const USER_DEFAULT_FONT_SIZE = "big"
-const USER_DEFAULT_PIC_MODE = "compact"
+const USER_DEFAULT_PIC_MODE = "normal"
 
 
 /**
